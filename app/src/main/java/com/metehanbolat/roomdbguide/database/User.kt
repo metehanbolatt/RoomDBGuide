@@ -10,7 +10,7 @@ data class User(
     val firstName: String,
     val lastName: String,
     val age: Int,
-    val profilePhoto: Bitmap,
+    val profilePhoto: Bitmap? = null,
     @Embedded
     val parent: Parent
 ) {
