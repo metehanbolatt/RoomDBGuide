@@ -12,6 +12,8 @@ import coil.request.SuccessResult
 import com.metehanbolat.roomdbguide.database.Parent
 import com.metehanbolat.roomdbguide.database.User
 import com.metehanbolat.roomdbguide.databinding.ActivityMainBinding
+import com.metehanbolat.roomdbguide.multipletable.SchoolDatabase
+import com.metehanbolat.roomdbguide.multipletable.data.*
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +27,26 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        val dao = SchoolDatabase.getInstance(this).schoolDao
+        lifecycleScope.launch {
+            directors.forEach { dao.insertDirector(it) }
+            schools.forEach { dao.insertSchool(it) }
+            subjects.forEach { dao.insertSubject(it) }
+            students.forEach { dao.insertStudent(it) }
+            studentSubjectRelations.forEach { dao.insertStudentSubjectCrossRef(it) }
+
+            val schoolWithDirector = dao.getSchoolAndDirectorWithSchoolName("Kotlin School")
+            val schoolWithStudents = dao.getSchoolWithStudents("Kotlin School")
+            println(schoolWithDirector.first().director)
+            println(schoolWithStudents.first().students)
+            val studentSubject = dao.getSubjectsOfStudent("Hom Tanks")
+            val subjectStudent = dao.getStudentsOfSubject("Avoiding depression")
+            println(studentSubject)
+            println(subjectStudent)
+
+        }
+
 /*
         viewModel.readAllData.observe(this) {
             println("readAllData User: $it")

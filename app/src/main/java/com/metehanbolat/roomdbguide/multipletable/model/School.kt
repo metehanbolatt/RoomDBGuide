@@ -1,11 +1,10 @@
-package com.metehanbolat.roomdbguide.multipletable
+package com.metehanbolat.roomdbguide.multipletable.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Director(
+data class School(
     @PrimaryKey(autoGenerate = false)
-    val directorName: String,
     val schoolName: String
 )
